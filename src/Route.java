@@ -1,22 +1,32 @@
 import java.util.Random;
 
-public class Route extends Thread {
-    private int rightTurns;
+public class Route implements Runnable {
+    private int turns;
+    CommonResource resource;
+
+    public Route(CommonResource resource) {
+        this.resource = resource;
+    }
 
     @Override
     public synchronized void run() {
         String route = generateRoute();
-        System.out.println("Right turns: " + countRightTurn(route));
+        countRightTurn(route);
+
+        try {
+            resource.addToMap(this);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    private int countRightTurn(String route) {
-        rightTurns = 0;
+    private void countRightTurn(String route) {
+        turns = 0;
         for (int i = 0; i < route.length(); i++) {
             if (route.charAt(i) == 'R') {
-                rightTurns++;
+                turns++;
             }
         }
-        return rightTurns;
     }
 
     private String generateRoute() {
@@ -30,10 +40,10 @@ public class Route extends Thread {
     }
 
     public boolean isEmpty() {
-        return rightTurns == 0;
+        return turns == 0;
     }
 
-    public int key() {
-        return this.rightTurns;
+    public Integer getTurns() {
+        return this.turns;
     }
 }

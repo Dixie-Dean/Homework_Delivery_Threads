@@ -1,30 +1,17 @@
-import java.util.HashMap;
-import java.util.Map;
-
 public class Main {
 
-    public static final Map<Integer, Integer> sizeToFreq = new HashMap<>();
-
     public static void main(String[] args) throws InterruptedException {
-        Route route;
+        CommonResource commonResource = new CommonResource();
+        Route route = new Route(commonResource);
 
-        for (int i = 0; i < 5; i++) {
-            route = new Route();
-            route.start();
-
-            addToMap(route);
+        for (int i = 0; i < 1000; i++) {
+            Thread thread = new Thread(route);
+            thread.setName("Thread: " + i);
+            thread.start();
         }
 
-        sizeToFreq.forEach((key, value) -> System.out.println(key + " : " + value + " times"));
-    }
+        Thread.sleep(10);
 
-    public static synchronized void addToMap(Route route) {
-        if (sizeToFreq.containsKey(route.key())) {
-            int newValue = sizeToFreq.get(route.key());
-            newValue++;
-            sizeToFreq.replace(route.key(), newValue);
-        } else {
-            sizeToFreq.put(route.key(), 1);
-        }
+        commonResource.submitResults();
     }
 }
