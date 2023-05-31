@@ -10,7 +10,7 @@ public class Main {
             thread.start();
         }
 
-        Thread.sleep(10);
+        Thread.sleep(100);
 
         commonResource.submitResults();
     }
