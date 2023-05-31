@@ -39,10 +39,6 @@ public class Route implements Runnable {
         return route.toString();
     }
 
-    public boolean isEmpty() {
-        return turns == 0;
-    }
-
     public Integer getTurns() {
         return this.turns;
     }
