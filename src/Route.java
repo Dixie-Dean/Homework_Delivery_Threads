@@ -7,7 +7,6 @@ public class Route implements Runnable {
     public synchronized void run() {
         String route = generateRoute();
         countRightTurn(route);
-        System.out.println(this.getTurns());
 
         try {
             CommonResource.addToMap(this);

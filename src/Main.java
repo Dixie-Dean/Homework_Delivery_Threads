@@ -7,7 +7,7 @@ public class Main {
         Route route = new Route();
         List<Thread> threads = new ArrayList<>();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1000; i++) {
             Thread thread = new Thread(route);
             thread.setName("Thread: " + i);
             threads.add(thread);
