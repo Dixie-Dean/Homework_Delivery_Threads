@@ -4,9 +4,19 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws InterruptedException {
-        CommonResource commonResource = new CommonResource();
-        Route route = new Route(commonResource);
+        Route route = new Route();
         List<Thread> threads = new ArrayList<>();
+
+        Thread submitter = new Thread(() -> {
+            while (!Thread.interrupted()) {
+                try {
+                    CommonResource.submitResults();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        });
+        submitter.start();
 
         for (int i = 0; i < 1000; i++) {
             Thread thread = new Thread(route);
@@ -19,6 +29,8 @@ public class Main {
             thread.join();
         }
 
-        commonResource.submitResults();
+        submitter.interrupt();
+
+        CommonResource.submitResultsFinal();
     }
 }

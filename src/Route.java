@@ -2,11 +2,6 @@ import java.util.Random;
 
 public class Route implements Runnable {
     private int turns;
-    CommonResource resource;
-
-    public Route(CommonResource resource) {
-        this.resource = resource;
-    }
 
     @Override
     public synchronized void run() {
@@ -14,7 +9,7 @@ public class Route implements Runnable {
         countRightTurn(route);
 
         try {
-            resource.addToMap(this);
+            CommonResource.addToMap(this);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
