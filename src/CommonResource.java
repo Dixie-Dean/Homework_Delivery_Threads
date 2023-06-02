@@ -4,7 +4,7 @@ import java.util.Map;
 public class CommonResource {
     public static final Map<Integer, Integer> sizeToFreq = new HashMap<>();
 
-    public void addToMap(Route route) throws InterruptedException {
+    public static synchronized void addToMap(Route route) throws InterruptedException {
         if (sizeToFreq.containsKey(route.getTurns())) {
             int newValue = sizeToFreq.get(route.getTurns());
             newValue++;
@@ -14,7 +14,7 @@ public class CommonResource {
         }
     }
 
-    public void submitResults() {
+    public static void submitResults() {
         int maxValue = 0;
         int maxKey = 0;
         for (Map.Entry<Integer, Integer> entry : sizeToFreq.entrySet()) {

@@ -4,11 +4,10 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws InterruptedException {
-        CommonResource commonResource = new CommonResource();
-        Route route = new Route(commonResource);
+        Route route = new Route();
         List<Thread> threads = new ArrayList<>();
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10; i++) {
             Thread thread = new Thread(route);
             thread.setName("Thread: " + i);
             threads.add(thread);
@@ -19,6 +18,7 @@ public class Main {
             thread.join();
         }
 
-        commonResource.submitResults();
+        System.out.println();
+        CommonResource.submitResults();
     }
 }
